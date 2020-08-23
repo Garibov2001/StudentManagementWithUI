@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Student Management System</title>
+        <link  rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/>
+      </head>
+  <body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="panel-wrapper m-auto ">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#student-add-modal">Tələbə əlavə et</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#student-edit-modal">Tələbənin məlumatlarınl dəyiş</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#student-delete-modal">Tələbəni sil</button>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#student-view-modal">Tələbəyə bax</button>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="header-wrapper m-auto">
+                <h1>Student Table</h1>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-8 m-auto">
+                <table id="studentTable" class="table table-striped">
+                    <thead>
+                        <tr> 
+                            <th scope="col">ID</th>
+                            <th scope="col">Ad</th>
+                            <th scope="col">Soyad</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefon</th>
+                        </tr>
+                   </thead>
+
+                    <tbody>                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- <button onclick="Display();">Click To Show</button> -->
+    </div>
+
+
+    
+    <!-- Modals -->
+    
+    <div id="student-add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tələbə əlavə et</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row  justify-content-center">
+                    <div class="col-6">
+                        <div class="form-group">  
+                            <label >ID</label>
+                            <input type="text" class="form-control" id="stundetID">                          
+                        </div>
+                    </div>                     
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >Ad</label>
+                            <input type="text" class="form-control" id="studentName">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >Soyad</label>
+                            <input type="text" class="form-control" id="studentLastName">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >E-mail</label>
+                            <input type="text" class="form-control" id="studentMail">
+                        </div>
+                    </div>    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label >Telefon</label>
+                            <input type="text" class="form-control" id="studentTelephone" placeholder="+994503144847">
+                        </div>
+                    </div>                
+                </div>                                                                  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Əməliyyatı saxla</button>
+                <button id="addStudentButton" type="button" class="btn btn-primary" onclick="AddStudent()" data-dismiss="">Tələbəni əlavə et</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div id="student-edit-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tələbə məlumatların</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">  
+                            <label >Tələbənin IDsi</label>
+                            <input  type="text" class="form-control" id="updateStudentID">                          
+                        </div>
+                    </div>                     
+                    <div class="col-6">                         
+                        <button id="updateSearchButton" type="button" class="btn btn-primary col-12" onclick="SearchForUpdate()" style="margin-top: 30px; ">Axtar</button>
+                    </div> 
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >Ad</label>
+                            <input disabled type="text" class="form-control" id="newStudentName">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label>Soyad</label>
+                            <input disabled type="text" class="form-control" id="newStudentLastName">
+                        </div>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >E-mail</label>
+                            <input disabled type="text" class="form-control" id="newStudentMail">
+                        </div>
+                    </div>    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label >Telefon</label>
+                            <input disabled type="text" class="form-control" id="newStudentTelephone">
+                        </div>
+                    </div>                
+                </div>                                                                  
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Bağla</button>
+              <button id="addStudentButton" type="button" class="btn btn-success" onclick="SaveEditChanges()" data-dismiss="">Yadda saxla</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div id="student-delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tələbə məlumatlarının silinməsi</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">  
+                            <label >Tələbənin IDsi</label>
+                            <input  type="text" class="form-control" id="deleteStudentID">                          
+                        </div>
+                    </div>                     
+                    <div class="col-6">                         
+                        <button id="removeSearchButton" type="button" class="btn btn-primary col-12" onclick="SearchToRemove()" style="margin-top: 30px; ">Axtar</button>
+                    </div> 
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >Ad</label>
+                            <input disabled type="text" class="form-control" id="removeStudentName">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label>Soyad</label>
+                            <input disabled type="text" class="form-control" id="removeStudentLastName">
+                        </div>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">  
+                            <label >E-mail</label>
+                            <input disabled type="text" class="form-control" id="removeStudentMail">
+                        </div>
+                    </div>    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label >Telefon</label>
+                            <input disabled type="text" class="form-control" id="removeStudentTelephone">
+                        </div>
+                    </div>                
+                </div>                                                                  
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Bağla</button>
+              <button id="removeStudentButton" type="button" class="btn btn-danger" onclick="RemoveStudentRecord()" data-dismiss="">Sil</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div id="student-view-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tələbə məlumatlarına bax</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">  
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Hansı kriteriyaya görə axtarış edəcəksən?</label>
+                            <select id="searchType" class="form-control" onchange="OnChangeOption()" >
+                                <option value="choose">Seç: </option>
+                                <option value="name" >Ad (Qeyd: Eyni adda şəxslər də gələcək)</option>
+                                <option value="ID" >ID </option>
+                            </select>
+                        </div> 
+                    </div>             
+                    <div class="col-5">                         
+                        <div class="form-group">  
+                            <label >Axtar: </label>
+                            <input disabled type="text" class="form-control" id="studentSearch">                          
+                        </div>
+                    </div> 
+                    <div class="col-2">                         
+                        <div class="form-group">  
+                            <button id="searchButton" type="button" class="btn btn-info" onclick="SearchData()" style="margin-top: 30px;">Axtar</button>                        
+                        </div>
+                    </div> 
+                </div> 
+                <hr>
+                <div class="row">
+                    <div class="col-9 m-auto">
+                        <table id="resultTable" class="table table-striped">
+                            <thead>
+                                <tr> 
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Ad</th>
+                                    <th scope="col">Soyad</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Telefon</th>
+                                </tr>
+                            </thead>            
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>                                                                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Bağla</button>              
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+  </body>
+  </body>
+</html>
